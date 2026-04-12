@@ -1,69 +1,61 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada de Lucro | Estratégia de Vendas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-950 text-slate-200 font-sans leading-relaxed">
-
-    <section class="relative py-24 px-6 overflow-hidden border-b border-slate-800">
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            <span class="text-emerald-500 font-bold tracking-widest uppercase text-sm">Exclusivo para PMEs em Governador Valadares</span>
-            <h1 class="text-5xl md:text-7xl font-black text-white mt-4 mb-8 tracking-tight">
-                Pare de ver tráfego como <span class="text-red-500">despesa</span>. Comece a ver como <span class="text-emerald-500">lucro</span>.
-            </h1>
-            <p class="text-xl text-slate-400 mb-12 max-w-3xl mx-auto">
-                Implemento o método <strong>Jornada de Lucro</strong>: uma análise completa que vai do primeiro anúncio até o dinheiro cair na sua conta.
-            </p>
-            <a href="https://wa.me/SEU_NUMERO" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-black py-5 px-12 rounded-full text-lg shadow-lg shadow-emerald-900/20 transition-all transform hover:-translate-y-1">
-                QUERO UM DIAGNÓSTICO DA MINHA JORNADA
-            </a>
+<section class="py-24 px-6 bg-slate-900 border-y border-slate-800">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white mb-4">Simulador de Viabilidade</h2>
+            <p class="text-slate-400">Descubra quanto você realmente ganha com cada cliente que eu trago.</p>
         </div>
-    </section>
 
-    <section class="py-24 px-6 bg-slate-900/50">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">O Método Jornada de Lucro</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 border border-slate-800 rounded-2xl bg-slate-900">
-                    <div class="text-emerald-500 text-4xl font-black mb-4">01</div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Diagnóstico da Jornada</h3>
-                    <p class="text-slate-400">Analisamos onde seu cliente está hoje e por que ele ainda não compra de você. Não é apenas anúncio, é processo.</p>
-                </div>
-                <div class="p-8 border border-slate-800 rounded-2xl bg-slate-900">
-                    <div class="text-emerald-500 text-4xl font-black mb-4">02</div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Atração de Intenção</h3>
-                    <p class="text-slate-400">Anúncios cirúrgicos no Google e Meta focados em quem tem dinheiro no bolso e pressa para resolver um problema.</p>
-                </div>
-                <div class="p-8 border border-slate-800 rounded-2xl bg-slate-900">
-                    <div class="text-emerald-500 text-4xl font-black mb-4">03</div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Otimização de Venda</h3>
-                    <p class="text-slate-400">Eu audito o seu atendimento. Se o lead chega mas não fecha, nós ajustamos o motor para garantir o ROI.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 px-6">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">Dúvidas Reais de Empresários</h2>
+        <div class="grid md:grid-cols-2 gap-12 bg-slate-950 p-8 rounded-3xl border border-emerald-900/30">
             <div class="space-y-6">
-                <div class="p-6 bg-slate-900 rounded-lg">
-                    <h4 class="font-bold text-emerald-400 italic">"O resultado demora a aparecer?"</h4>
-                    <p class="mt-2 text-slate-400">O tráfego pago é imediato. O que demora é o ajuste da sua oferta. Na Jornada de Lucro, trabalhamos para ter os primeiros dados em 7 dias.</p>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Investimento em Anúncios (R$)</label>
+                    <input type="number" id="invest" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
                 </div>
-                <div class="p-6 bg-slate-900 rounded-lg">
-                    <h4 class="font-bold text-emerald-400 italic">"É despesa ou investimento?"</h4>
-                    <p class="mt-2 text-slate-400">Se você gasta R$ 1.000 e volta R$ 0, é despesa. Se volta R$ 2.000, é o melhor investimento da sua vida. Meu foco é o segundo cenário.</p>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Vendas Geradas (Qtd)</label>
+                    <input type="number" id="sales" value="20" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Ticket Médio (Venda Única)</label>
+                    <input type="number" id="ticket" value="150" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Quantas vezes ele compra por ano?</label>
+                    <input type="number" id="freq" value="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-center bg-emerald-950/20 p-8 rounded-2xl border border-emerald-500/20">
+                <div class="mb-6">
+                    <p class="text-slate-400 text-sm uppercase tracking-wider">Seu custo para adquirir 1 cliente (CAC):</p>
+                    <p class="text-3xl font-black text-white">R$ <span id="cac-val">50,00</span></p>
+                </div>
+                <div>
+                    <p class="text-emerald-400 text-sm uppercase tracking-wider font-bold">Valor Real do Cliente (LTV):</p>
+                    <p class="text-5xl font-black text-emerald-500">R$ <span id="ltv-val">450,00</span></p>
+                    <p class="text-slate-500 text-xs mt-2">*Este é o lucro potencial que você ignora hoje.</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <footer class="py-12 border-t border-slate-800 text-center text-slate-500 text-sm">
-        <p>&copy; 2026 Diego Botelho - Especialista em Jornada de Lucro</p>
     </div>
-</body>
-</html>
+</section>
+
+<script>
+    function calculate() {
+        const invest = parseFloat(document.getElementById('invest').value) || 0;
+        const sales = parseFloat(document.getElementById('sales').value) || 1;
+        const ticket = parseFloat(document.getElementById('ticket').value) || 0;
+        const freq = parseFloat(document.getElementById('freq').value) || 1;
+
+        const cac = invest / sales;
+        const ltv = ticket * freq;
+
+        document.getElementById('cac-val').innerText = cac.toFixed(2);
+        document.getElementById('ltv-val').innerText = ltv.toFixed(2);
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', calculate);
+    });
+    calculate();
+</script>
