@@ -158,24 +158,111 @@
         </p>
     </footer>
 
-    <script>
-        function calculate() {
-            const invest = parseFloat(document.getElementById('invest').value) || 0;
-            const sales = parseFloat(document.getElementById('sales').value) || 1;
-            const ticket = parseFloat(document.getElementById('ticket').value) || 0;
-            const freq = parseFloat(document.getElementById('freq').value) || 1;
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            const cac = invest / sales;
-            const ltv = ticket * freq;
+<section class="py-24 px-6 bg-slate-950 border-y border-slate-900">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Simulador de Escala de Lucro</h2>
+            <p class="text-slate-400 text-lg">Mova os controles e veja o gráfico do seu faturamento futuro.</p>
+        </div>
 
-            document.getElementById('cac-val').innerText = cac.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            document.getElementById('ltv-val').innerText = ltv.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        <div class="grid lg:grid-cols-3 gap-8 items-start">
+            <div class="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Investimento Mensal</label>
+                    <input type="range" id="invest" min="500" max="10000" step="100" value="2000" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    <div class="text-white font-bold mt-2">R$ <span id="invest-txt">2000</span></div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Custo por Lead (Estimado)</label>
+                    <input type="range" id="cpl" min="1" max="50" step="0.5" value="5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                    <div class="text-white font-bold mt-2">R$ <span id="cpl-txt">5.00</span></div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Taxa de Conversão Comercial (%)</label>
+                    <input type="range" id="conv" min="1" max="50" step="1" value="10" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    <div class="text-white font-bold mt-2"><span id="conv-txt">10</span>%</div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 lg:col-span-2 flex flex-col items-center">
+                <div class="w-full h-64">
+                    <canvas id="profitChart"></canvas>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-8">
+                    <div class="text-center">
+                        <p class="text-slate-500 text-[10px] uppercase font-bold">CAC</p>
+                        <p class="text-xl font-black text-white">R$ <span id="cac-res">0</span></p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-slate-500 text-[10px] uppercase font-bold">Vendas</p>
+                        <p class="text-xl font-black text-white"><span id="sales-res">0</span></p>
+                    </div>
+                    <div class="text-center border-l border-slate-800">
+                        <p class="text-emerald-500 text-[10px] uppercase font-bold text-glow">ROI Atual</p>
+                        <p class="text-xl font-black text-emerald-500"><span id="roi-res">0</span>x</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-emerald-500 text-[10px] uppercase font-bold">LTV Estimado</p>
+                        <p class="text-xl font-black text-emerald-500 font-glow">R$ <span id="ltv-res">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const ctx = document.getElementById('profitChart').getContext('2d');
+    let profitChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Investimento', 'Faturamento Bruto'],
+            datasets: [{
+                data: [0, 0],
+                backgroundColor: ['#1e293b', '#10b981'],
+                borderRadius: 10,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#64748b' } } }
         }
+    });
 
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', calculate);
-        });
-        calculate();
-    </script>
+    function updateSim() {
+        const invest = parseFloat(document.getElementById('invest').value);
+        const cpl = parseFloat(document.getElementById('cpl').value);
+        const conv = parseFloat(document.getElementById('conv').value) / 100;
+        const ticket = 1490; // Seu ticket médio informado na imagem
+        const freq = 2; // Frequência informada na imagem
+
+        const leads = invest / cpl;
+        const sales = Math.floor(leads * conv);
+        const revenue = sales * ticket;
+        const cac = sales > 0 ? invest / sales : 0;
+        const roi = revenue > 0 ? (revenue / invest).toFixed(1) : 0;
+        const ltv = ticket * freq;
+
+        // Atualizar textos
+        document.getElementById('invest-txt').innerText = invest;
+        document.getElementById('cpl-txt').innerText = cpl.toFixed(2);
+        document.getElementById('conv-txt').innerText = Math.round(conv * 100);
+        document.getElementById('cac-res').innerText = cac.toFixed(2);
+        document.getElementById('sales-res').innerText = sales;
+        document.getElementById('roi-res').innerText = roi;
+        document.getElementById('ltv-res').innerText = ltv.toFixed(2);
+
+        // Atualizar Gráfico
+        profitChart.data.datasets[0].data = [invest, revenue];
+        profitChart.update();
+    }
+
+    document.querySelectorAll('input').forEach(i => i.addEventListener('input', updateSim));
+    updateSim();
+</script>
 </body>
 </html>
